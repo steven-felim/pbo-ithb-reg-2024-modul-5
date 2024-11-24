@@ -5,27 +5,18 @@ import model.enums.*;
 import java.util.Date;
 
 public class Data {
-    private String nik;
-    private String nama;
+    private String nik, nama;
     private Date tanggalLahir;
     private String tempatLahir;
     private JenisKelamin jenisKelamin;
     private GolonganDarah golonganDarah;
-    private String alamat;
-    private String rtRw;
-    private String kelDesa;
-    private String kecamatan;
+    private String alamat, rtRw, kelDesa, kecamatan;
     private Agama agama;
     private StatusPerkawinan status;
-    private Pekerjaan pekerjaan;
-    private String kewarganegaraan;
-    private String foto;
-    private String tandaTangan;
-    private String berlakuHingga;
-    private String kotaPembuatanKTP;
+    private String pekerjaan, kewarganegaraan, foto, tandaTangan, berlakuHingga, kotaPembuatanKTP;
     private Date tanggalPembuatanKTP;
 
-    public Data(String nik, String nama, Date tanggalLahir, String tempatLahir, JenisKelamin jenisKelamin, GolonganDarah golonganDarah, String alamat, String rtRw, String kelDesa, String kecamatan, Agama agama, StatusPerkawinan status, Pekerjaan pekerjaan, String kewarganegaraan, String foto, String tandaTangan, String berlakuHingga, String kotaPembuatanKTP, Date tanggalPembuatanKTP) {
+    public Data(String nik, String nama, Date tanggalLahir, String tempatLahir, JenisKelamin jenisKelamin, GolonganDarah golonganDarah, String alamat, String rtRw, String kelDesa, String kecamatan, Agama agama, StatusPerkawinan status, String pekerjaan, String kewarganegaraan, String foto, String tandaTangan, String berlakuHingga, String kotaPembuatanKTP, Date tanggalPembuatanKTP) {
         this.nik = nik;
         this.nama = nama;
         this.tanggalLahir = tanggalLahir;
@@ -143,11 +134,11 @@ public class Data {
         this.status = status;
     }
 
-    public Pekerjaan getPekerjaan() {
+    public String getPekerjaan() {
         return pekerjaan;
     }
 
-    public void setPekerjaan(Pekerjaan pekerjaan) {
+    public void setPekerjaan(String pekerjaan) {
         this.pekerjaan = pekerjaan;
     }
 
