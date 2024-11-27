@@ -2,6 +2,8 @@ package view;
 
 import javax.swing.*;
 
+import controller.Validator;
+import model.classes.DataKTP;
 import model.classes.DateLabelFormatter;
 import org.jdatepicker.impl.*;
 import view.panels.*;
@@ -9,47 +11,37 @@ import view.panels.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
-public class InputForm implements ActionListener {
-//    private JTextField fNik, fNama, fTempatLahir, fAlamat, fRtRw, fKelDesa, fKecamatan, fKotaPembuatanKtp, fWNA;
-//    private JDatePickerImpl fTanggalLahir, tanggalPembuatanKTPField;
-//    private JFileChooser fcFoto, fcTtd;
+import java.util.*;
+
+public class InputForm extends JFrame implements ActionListener {
     private JButton submit;
+    private DataKTP data = new DataKTP();
+    private Validator validator = new Validator();
 
-    Map<String, String> inputData, inputRadio, inputComboBox;
-    Map<String, Date> inputDate;
-    Map<String, File> inputFile;
-    Map<String,Object> allInput = new HashMap<>();
+    private InputPanel input = new InputPanel();
+    private InputDate date = new InputDate();
+    private InputRadio radio = new InputRadio();
+    private InputComboBox comboBox = new InputComboBox();
+    private InputCheckBox checkBox = new InputCheckBox();
+    private FileChooser fileChooser = new FileChooser();
+
+    private JTextField fNik, fNama, fTempatLahir, fAlamat, fRtRw, fKelDesa, fKecamatan, fBerlakuHingga, fKotaPembuatanKtp, fWNA;
+    private JDatePickerImpl fTanggalLahir, fTanggalPembuatanKTP;
+    private JFileChooser fcFoto, fcTtd;
 
     public InputForm() {
         initComponents();
     }
 
     private void initComponents() {
-        JFrame frame = new JFrame();
-        frame.setTitle("Input Data");
-        frame.setBounds(400, 200, 1280, 720);
-        frame.setLocationRelativeTo(null);
-
-        InputPanel input = new InputPanel();
-        InputDate date = new InputDate();
-        InputRadio radio = new InputRadio();
-        InputComboBox comboBox = new InputComboBox();
-        InputCheckBox checkBox = new InputCheckBox();
-        FileChooser fileChooser = new FileChooser();
-
-        JTextField fNik, fNama, fTempatLahir, fAlamat, fRtRw, fKelDesa, fKecamatan, fBerlakuHingga, fKotaPembuatanKtp;
-        JDatePickerImpl fTanggalLahir, fTanggalPembuatanKTP;
-        JFileChooser fcFoto, fcTtd;
-
+        this.setTitle("Input Data");
+        this.setBounds(400, 200, 1024, 768);
+        this.setLocationRelativeTo(null);
 
         JPanel c = new JPanel(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(10, 10, 10, 50);
+        gbc.insets = new Insets(5, 5, 5, 40);
         gbc.anchor = GridBagConstraints.WEST;
 
         gbc.gridx = 0;
@@ -115,11 +107,11 @@ public class InputForm implements ActionListener {
         gbc.gridwidth = 1;
         gbc.anchor = GridBagConstraints.EAST;
         fcFoto = new JFileChooser();
-        c.add(fileChooser.createFileChooser(fcFoto, "Foto : "), gbc);
+        c.add(fileChooser.createFileChooserFoto(fcFoto, "Foto : ", data), gbc);
 
         gbc.gridy++;
         fcTtd = new JFileChooser();
-        c.add(fileChooser.createFileChooser(fcTtd, "Tanda Tangan : "), gbc);
+        c.add(fileChooser.createFileChooserTtd(fcTtd, "Tanda Tangan : ", data), gbc);
 
         gbc.gridy++;
         gbc.anchor = GridBagConstraints.WEST;
@@ -134,10 +126,10 @@ public class InputForm implements ActionListener {
         fTanggalPembuatanKTP = new JDatePickerImpl(date.createDatePanel(), new DateLabelFormatter());
         c.add(date.createInputDatePanel(fTanggalPembuatanKTP, "Tanggal Pembuatan KTP : "), gbc);
 
-        frame.add(c);
+        this.add(c);
 
         JScrollPane scrollPane = new JScrollPane(c);
-        frame.add(scrollPane);
+        this.add(scrollPane);
 
         submit = new JButton("Submit!");
         submit.setBounds(10, 100, 200, 40);
@@ -145,22 +137,48 @@ public class InputForm implements ActionListener {
         submit.setEnabled(true);
         submit.setVisible(true);
 
-        gbc.gridx--;
         gbc.gridy++;
-        gbc.gridwidth = 2;
+        gbc.gridwidth = 1;
         gbc.anchor = GridBagConstraints.CENTER;
         c.add(submit, gbc);
 
-        frame.setVisible(true);
-        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-    }
-
-    private void onSubmit() {
-
+        this.setVisible(true);
+        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         onSubmit();
     }
+
+    private void onSubmit() {
+        data.setNik(fNik.getText());
+        data.setNama(fNama.getText());
+        data.setTempatLahir(fTempatLahir.getText());
+        data.setTanggalLahir((Date) fTanggalLahir.getModel().getValue());
+        data.setJenisKelamin(radio.getSelectedGender());
+        data.setGolonganDarah(radio.getSelectedGolonganDarah());
+        data.setAlamat(fAlamat.getText());
+        data.setRtRw(fRtRw.getText());
+        data.setKelDesa(fKelDesa.getText());
+        data.setKecamatan(fKecamatan.getText());
+        data.setAgama(comboBox.getSelectedAgama());
+        data.setStatus(comboBox.getSelectedStatusPerkawinan());
+        data.setPekerjaan(checkBox.getSelectedPekerjaan());
+        data.setKewarganegaraan(radio.getSelectedKewarganegaraan());
+        data.setTandaTangan(fcTtd.getSelectedFile().getAbsolutePath());
+        data.setBerlakuHingga(fBerlakuHingga.getText());
+        data.setKotaPembuatanKTP(fKotaPembuatanKtp.getText());
+        data.setTanggalPembuatanKTP((Date) fTanggalPembuatanKTP.getModel().getValue());
+
+        boolean validSemua = validator.validateForm(data);
+        if (validSemua) {
+            new Hasil().HasilKTP(data);
+            this.dispose();
+        } else {
+            JOptionPane.showMessageDialog(null, "Input Tidak Valid", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+
 }
