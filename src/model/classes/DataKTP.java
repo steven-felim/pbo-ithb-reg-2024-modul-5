@@ -4,7 +4,7 @@ import model.enums.*;
 
 import java.util.Date;
 
-public class Data {
+public class DataKTP {
     private String nik, nama;
     private Date tanggalLahir;
     private String tempatLahir;
@@ -16,7 +16,7 @@ public class Data {
     private String pekerjaan, kewarganegaraan, foto, tandaTangan, berlakuHingga, kotaPembuatanKTP;
     private Date tanggalPembuatanKTP;
 
-    public Data(String nik, String nama, Date tanggalLahir, String tempatLahir, JenisKelamin jenisKelamin, GolonganDarah golonganDarah, String alamat, String rtRw, String kelDesa, String kecamatan, Agama agama, StatusPerkawinan status, String pekerjaan, String kewarganegaraan, String foto, String tandaTangan, String berlakuHingga, String kotaPembuatanKTP, Date tanggalPembuatanKTP) {
+    public DataKTP(String nik, String nama, Date tanggalLahir, String tempatLahir, JenisKelamin jenisKelamin, GolonganDarah golonganDarah, String alamat, String rtRw, String kelDesa, String kecamatan, Agama agama, StatusPerkawinan status, String pekerjaan, String kewarganegaraan, String foto, String tandaTangan, String berlakuHingga, String kotaPembuatanKTP, Date tanggalPembuatanKTP) {
         this.nik = nik;
         this.nama = nama;
         this.tanggalLahir = tanggalLahir;
@@ -36,6 +36,10 @@ public class Data {
         this.berlakuHingga = berlakuHingga;
         this.kotaPembuatanKTP = kotaPembuatanKTP;
         this.tanggalPembuatanKTP = tanggalPembuatanKTP;
+    }
+
+    public DataKTP() {
+
     }
 
     public String getNik() {
