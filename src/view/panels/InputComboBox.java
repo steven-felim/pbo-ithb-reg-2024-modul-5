@@ -8,6 +8,8 @@ import javax.swing.*;
 import static view.panels.Panel.createPanel;
 
 public class InputComboBox {
+    private JComboBox<String> cAgama, cStatusKawin;
+
     public JPanel createInputComboBoxAgama(String labelText) {
         JPanel panel = createPanel(labelText);
         Agama[] agama = Agama.values();
@@ -15,9 +17,13 @@ public class InputComboBox {
         arrAgama[0] = "";
         System.arraycopy(agama, 0, arrAgama, 1, agama.length);
 
-        JComboBox<String> cAgama = new JComboBox(arrAgama);
+        cAgama = new JComboBox(arrAgama);
         panel.add(cAgama);
         return panel;
+    }
+
+    public Agama getSelectedAgama() {
+        return (Agama) cAgama.getSelectedItem();
     }
 
     public JPanel createInputComboBoxStatusKawin(String labelText) {
@@ -27,8 +33,12 @@ public class InputComboBox {
         arrStatusPerkawinan[0] = "";
         System.arraycopy(status, 0, arrStatusPerkawinan, 1, status.length);
 
-        JComboBox<String> cStatusKawin = new JComboBox(arrStatusPerkawinan);
+        cStatusKawin = new JComboBox(arrStatusPerkawinan);
         panel.add(cStatusKawin);
         return panel;
+    }
+
+    public StatusPerkawinan getSelectedStatusPerkawinan() {
+        return (StatusPerkawinan) cStatusKawin.getSelectedItem();
     }
 }

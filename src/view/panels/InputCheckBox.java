@@ -2,11 +2,12 @@ package view.panels;
 
 import javax.swing.*;
 import java.util.ArrayList;
+import java.util.List;
 
 import static view.panels.Panel.createPanel;
 
 public class InputCheckBox {
-    private ArrayList<JCheckBox> pekerjaan;
+    private List<JCheckBox> pekerjaan;
 
     public JPanel createCheckBoxPekerjaan(String labelText) {
         JPanel panel = createPanel(labelText);
@@ -48,6 +49,28 @@ public class InputCheckBox {
         });
 
         return panel;
+    }
+
+    public String getSelectedPekerjaan() {
+        List<String> selectedPekerjaan = new ArrayList<>();
+
+        if (pekerjaan.get(0).isSelected()) {
+            selectedPekerjaan.add("Karyawan Swasta");
+        }
+        if (pekerjaan.get(1).isSelected()) {
+            selectedPekerjaan.add("Pegawai Negeri Sipil");
+        }
+        if (pekerjaan.get(2).isSelected()) {
+            selectedPekerjaan.add("Wiraswasta");
+        }
+        if (pekerjaan.get(3).isSelected()) {
+            selectedPekerjaan.add("Akademisi");
+        }
+        if (pekerjaan.get(4).isSelected()) {
+            selectedPekerjaan.add("Pengangguran");
+        }
+
+        return String.join(", ", selectedPekerjaan);
     }
 
 }
